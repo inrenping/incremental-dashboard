@@ -10,7 +10,6 @@ import {
   Moon,
   NotebookPen,
   Settings,
-  Activity,
 } from "lucide-react"
 import * as React from "react"
 
@@ -89,9 +88,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <div className="flex items-center gap-2 px-2 py-1">
-          <div className="flex size-8 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <Activity className="size-4" />
-          </div>
+          <img src="/favicon.svg" alt="Incremental" className="size-8 rounded-lg" />
           <div className="grid flex-1 text-left text-sm leading-tight">
             <span className="truncate font-semibold">Incremental</span>
             <span className="truncate text-xs text-muted-foreground">
