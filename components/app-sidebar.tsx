@@ -88,12 +88,9 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <div className="flex items-center gap-2 px-2 py-1">
-          <img src="/favicon.svg" alt="Incremental" className="size-8 rounded-lg" />
+          <img src="/favicon.svg" alt="incremental.icu" className="size-5" />
           <div className="grid flex-1 text-left text-sm leading-tight">
-            <span className="truncate font-semibold">Incremental</span>
-            <span className="truncate text-xs text-muted-foreground">
-              运动数据管理
-            </span>
+            <span className="truncate font-semibold">incremental.icu</span>
           </div>
         </div>
       </SidebarHeader>
