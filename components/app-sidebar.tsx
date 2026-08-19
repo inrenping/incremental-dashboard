@@ -3,10 +3,8 @@
 import {
   BarChart3,
   Calendar,
-  CircleHelp,
   HeartPulse,
   LayoutDashboard,
-  MessageSquare,
   Moon,
   NotebookPen,
   Settings,
@@ -14,15 +12,11 @@ import {
 import * as React from "react"
 
 import { NavMain, type NavItem } from "@/components/nav-main"
-import { NavSecondary } from "@/components/nav-secondary"
-import { NavUser } from "@/components/nav-user"
 import {
   Sidebar,
   SidebarContent,
-  SidebarFooter,
   SidebarHeader,
   SidebarRail,
-  SidebarSeparator,
 } from "@/components/ui/sidebar"
 
 const navMain: NavItem[] = [
@@ -64,25 +58,6 @@ const navMain: NavItem[] = [
   },
 ]
 
-const navSecondary = [
-  {
-    title: "帮助中心",
-    url: "#",
-    icon: CircleHelp,
-  },
-  {
-    title: "意见反馈",
-    url: "#",
-    icon: MessageSquare,
-  },
-]
-
-const user = {
-  name: "inrenping",
-  email: "inrenping@gmail.com",
-  avatar: "",
-}
-
 export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -96,12 +71,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={navMain} />
-        <SidebarSeparator className="mt-auto" />
-        <NavSecondary items={navSecondary} />
       </SidebarContent>
-      <SidebarFooter>
-        <NavUser user={user} />
-      </SidebarFooter>
       <SidebarRail />
     </Sidebar>
   )
