@@ -2,13 +2,13 @@
 
 import { Bell } from "lucide-react"
 import * as React from "react"
+import { UserButton } from "@clerk/nextjs"
 
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { ThemeToggle } from "@/components/theme-toggle"
-import { UserMenu } from "@/components/user-menu"
 
 export function SiteHeader() {
   return (
@@ -29,7 +29,7 @@ export function SiteHeader() {
             <Bell />
             <span className="sr-only">消息通知</span>
           </Button>
-          <UserMenu />
+          <UserButton />
         </div>
       </div>
     </header>
