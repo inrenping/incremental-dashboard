@@ -14,7 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Incremental Dashboard",
+  title: "incremental.icu",
   description: "运动数据管理仪表盘",
 };
 

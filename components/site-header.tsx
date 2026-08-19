@@ -1,14 +1,14 @@
 "use client"
 
-import { Bell, Search } from "lucide-react"
+import { Bell } from "lucide-react"
 import * as React from "react"
 
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from "@/components/ui/breadcrumb"
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { UserMenu } from "@/components/user-menu"
 
 export function SiteHeader() {
   return (
@@ -24,19 +24,12 @@ export function SiteHeader() {
           </BreadcrumbList>
         </Breadcrumb>
         <div className="ml-auto flex items-center gap-2">
-          <div className="relative hidden md:block">
-            <Search className="absolute top-1/2 left-2.5 size-4 -translate-y-1/2 text-muted-foreground" />
-            <Input
-              type="search"
-              placeholder="搜索训练记录..."
-              className="h-8 w-48 pl-8 shadow-none lg:w-64"
-            />
-          </div>
           <ThemeToggle />
           <Button variant="outline" size="icon-sm">
             <Bell />
             <span className="sr-only">消息通知</span>
           </Button>
+          <UserMenu />
         </div>
       </div>
     </header>
