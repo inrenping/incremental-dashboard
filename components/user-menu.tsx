@@ -1,6 +1,7 @@
 "use client"
 
 import { BadgeCheck, Bell, LogOut } from "lucide-react"
+import { useClerk } from "@clerk/nextjs"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
@@ -21,6 +22,8 @@ const user = {
 }
 
 export function UserMenu() {
+  const { signOut } = useClerk()
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
@@ -71,7 +74,7 @@ export function UserMenu() {
           消息通知
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem variant="destructive">
+        <DropdownMenuItem variant="destructive" onClick={() => signOut()}>
           <LogOut />
           退出登录
         </DropdownMenuItem>
