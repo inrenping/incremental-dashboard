@@ -35,6 +35,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               defaultTheme="light"
               enableSystem
               disableTransitionOnChange
+              storage="local"
             >
               {children}
             </ThemeProvider>
