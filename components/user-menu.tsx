@@ -1,6 +1,6 @@
 "use client"
 
-import { BadgeCheck, Bell, LogOut } from "lucide-react"
+import { IconBell, IconCircleCheck, IconLogout } from "@tabler/icons-react"
 import { useClerk } from "@clerk/nextjs"
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
@@ -26,24 +26,22 @@ export function UserMenu() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger
-        render={
-          <Button
-            variant="ghost"
-            size="lg"
-            className="flex items-center gap-2 rounded-full px-2"
-          />
-        }
-      >
-        <Avatar className="size-7">
-          <AvatarImage src={user.avatar} alt={user.name} />
-          <AvatarFallback className="bg-primary/10 text-primary text-[10px] font-medium">
-            {user.name.charAt(0).toUpperCase()}
-          </AvatarFallback>
-        </Avatar>
-        <span className="mr-1 hidden text-sm font-medium text-muted-foreground md:inline-block">
-          {user.name}
-        </span>
+      <DropdownMenuTrigger asChild>
+        <Button
+          variant="ghost"
+          size="lg"
+          className="flex items-center gap-2 rounded-full px-2"
+        >
+          <Avatar className="size-7">
+            <AvatarImage src={user.avatar} alt={user.name} />
+            <AvatarFallback className="bg-primary/10 text-primary text-[10px] font-medium">
+              {user.name.charAt(0).toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+          <span className="mr-1 hidden text-sm font-medium text-muted-foreground md:inline-block">
+            {user.name}
+          </span>
+        </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-52">
         <DropdownMenuGroup>
@@ -66,16 +64,16 @@ export function UserMenu() {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem>
-          <BadgeCheck />
+          <IconCircleCheck />
           个人资料
         </DropdownMenuItem>
         <DropdownMenuItem>
-          <Bell />
+          <IconBell />
           消息通知
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem variant="destructive" onClick={() => signOut()}>
-          <LogOut />
+          <IconLogout />
           退出登录
         </DropdownMenuItem>
       </DropdownMenuContent>

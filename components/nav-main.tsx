@@ -33,10 +33,12 @@ export function NavMain({
             <SidebarMenuButton
               tooltip={item.title}
               isActive={item.isActive}
-              render={<a href={item.url} />}
+              asChild
             >
-              {item.icon && <item.icon />}
-              <span>{item.title}</span>
+              <a href={item.url}>
+                {item.icon && <item.icon />}
+                <span>{item.title}</span>
+              </a>
             </SidebarMenuButton>
           </SidebarMenuItem>
         ))}

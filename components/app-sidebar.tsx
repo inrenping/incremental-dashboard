@@ -1,14 +1,10 @@
 "use client"
 
 import {
-  BarChart3,
-  Calendar,
-  HeartPulse,
-  LayoutDashboard,
-  Moon,
-  NotebookPen,
-  Settings,
-} from "lucide-react"
+  IconLayoutDashboard,
+  IconNotebook,
+  IconSettings,
+} from "@tabler/icons-react"
 import * as React from "react"
 
 import Image from "next/image"
@@ -25,38 +21,18 @@ const navMain: NavItem[] = [
   {
     title: "仪表盘",
     url: "#",
-    icon: LayoutDashboard,
+    icon: IconLayoutDashboard,
     isActive: true,
-  },
-  {
-    title: "训练计划",
-    url: "#",
-    icon: Calendar,
   },
   {
     title: "运动日志",
     url: "#",
-    icon: NotebookPen,
-  },
-  {
-    title: "身体指标",
-    url: "#",
-    icon: HeartPulse,
-  },
-  {
-    title: "数据分析",
-    url: "#",
-    icon: BarChart3,
-  },
-  {
-    title: "睡眠记录",
-    url: "#",
-    icon: Moon,
+    icon: IconNotebook,
   },
   {
     title: "设置",
     url: "#",
-    icon: Settings,
+    icon: IconSettings,
   },
 ]
 
