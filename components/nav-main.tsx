@@ -4,7 +4,6 @@ import * as React from "react"
 
 import {
   SidebarGroup,
-  SidebarGroupLabel,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
@@ -17,16 +16,9 @@ export type NavItem = {
   isActive?: boolean
 }
 
-export function NavMain({
-  items,
-  label = "功能",
-}: {
-  items: NavItem[]
-  label?: string
-}) {
+export function NavMain({ items }: { items: NavItem[] }) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>{label}</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem key={item.title}>
