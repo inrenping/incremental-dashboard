@@ -8,5 +8,5 @@ export default function SettingsLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <DashboardLayout>{children}</DashboardLayout>
+  return <DashboardLayout><div className="flex-1 p-6">{children}</div></DashboardLayout>
 }
