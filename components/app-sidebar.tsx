@@ -42,7 +42,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <div className="flex items-center gap-2 px-2 py-1">
           <Image
-            src="/dashboard/favicon.svg"
+            src="/favicon.svg"
             alt="incremental.icu"
             width={20}
             height={20}

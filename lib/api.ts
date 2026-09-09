@@ -30,7 +30,7 @@ export async function clerkFetch(input: RequestInfo, init?: RequestInit) {
 
   if (response.status === 401 && typeof window !== "undefined") {
     // Clerk middleware 会在下次导航时拦截，这里直接跳转触发重定向
-    // 生产指向主站 /sign-in，本地开发指向本应用 /dashboard/sign-in
+    // 登录页即本应用自身的 /sign-in
     const signInUrl = process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL ?? "/sign-in";
     window.location.href = signInUrl;
   }
