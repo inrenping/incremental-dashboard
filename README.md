@@ -15,12 +15,12 @@
 浏览器 ──HTTPS──> 本应用（Vercel，域名根路径）
                     ├── /sign-in   → Clerk 登录页（本应用）
                     ├── /sign-up   → Clerk 注册页（本应用）
-                    ├── /          → 仪表盘（受保护，登录后访问）
+                    ├── /home      → 仪表盘（受保护，登录后访问）
                     └── /api/v1    → Vercel rewrite 代理到后端
 ```
 
 - 应用独立部署，无 basePath、无路径分流。
-- 登录态由 Clerk 管理：未登录访问受保护页面（含首页 `/`）会被重定向到 `/sign-in`，登录成功后自动回跳原页面。
+- 登录态由 Clerk 管理：未登录访问受保护页面（含 `/home`）会被重定向到 `/sign-in`，登录成功后自动回跳原页面。
 - 后端 API 走同源路径 `/api/v1`，由 `next.config.ts` 的 rewrites 代理到后端服务（开发指向本机，生产指向后端域名），请求头带 Clerk JWT。
 
 ## 本地开发
@@ -35,7 +35,7 @@ npm run dev
 ## 环境变量
 
 | 变量 | 说明 | 生产值 |
-|---|---|---|
+| --- | --- | --- |
 | `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` | Clerk 公钥 | 现有 Clerk 应用的 `pk_live_...` |
 | `CLERK_SECRET_KEY` | Clerk 密钥 | 现有 Clerk 应用的 `sk_live_...` |
 | `NEXT_PUBLIC_CLERK_SIGN_IN_URL` | 登录页地址（本应用自身） | `/sign-in` |
@@ -66,8 +66,8 @@ NEXT_PUBLIC_BACKEND_URL=https://<backend-domain>
 
 ### 3. 验证
 
-- `https://<your-domain>/` 打开仪表盘；未登录时自动跳转 `/sign-in`。
-- 在 `/sign-in` 登录成功后自动回跳首页。
+- `https://<your-domain>/home` 打开仪表盘；未登录时自动跳转 `/sign-in`。
+- 在 `/sign-in` 登录成功后自动回跳 `/home`。
 - `/sign-up` 可正常注册新账号。
 
 ## 目录结构

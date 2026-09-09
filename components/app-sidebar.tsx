@@ -2,12 +2,16 @@
 
 import {
   IconLayoutDashboard,
-  IconNotebook,
-  IconSettings,
+  IconUser,
+  IconApps,
+  IconKey,
+  IconClock,
+  IconBook,
 } from "@tabler/icons-react"
 import * as React from "react"
 
 import Image from "next/image"
+import Link from "next/link"
 
 import { NavMain, type NavItem } from "@/components/nav-main"
 import {
@@ -20,19 +24,25 @@ import {
 const navMain: NavItem[] = [
   {
     title: "仪表盘",
-    url: "#",
+    url: "/home",
     icon: IconLayoutDashboard,
     isActive: true,
   },
   {
-    title: "运动日志",
-    url: "#",
-    icon: IconNotebook,
+    title: "设置",
+    url: "/settings/profile",
+    icon: IconUser,
+    items: [
+      { title: "个人资料", url: "/settings/profile", icon: IconUser },
+      { title: "账号管理", url: "/settings/accounts", icon: IconApps },
+      { title: "GPT 授权码", url: "/settings/gpt", icon: IconKey },
+      { title: "定时任务", url: "/settings/task", icon: IconClock },
+    ],
   },
   {
-    title: "设置",
-    url: "#",
-    icon: IconSettings,
+    title: "文档",
+    url: "/doc/intro",
+    icon: IconBook,
   },
 ]
 
@@ -40,7 +50,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <div className="flex items-center gap-2 px-2 py-1">
+        <Link href="/home" className="flex items-center gap-2 px-2 py-1">
           <Image
             src="/favicon.svg"
             alt="incremental.icu"
@@ -51,7 +61,7 @@ export function AppSidebar(props: React.ComponentProps<typeof Sidebar>) {
           <div className="grid flex-1 text-left text-sm leading-tight">
             <span className="truncate font-semibold">incremental.icu</span>
           </div>
-        </div>
+        </Link>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={navMain} />
