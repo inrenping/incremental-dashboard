@@ -11,3 +11,5 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 ## Working Principles
 
 **Before executing any actual operations (modifying code, creating files, running commands, etc.), you must first confirm with the user. Only proceed after receiving explicit approval.** Read-only operations such as analysis, reading, and searching do not require confirmation.
+
+**Before modifying any source code files, you must first explain the planned changes and ask the user for approval.** This applies to all code modifications — whether adding new features, fixing bugs, or refactoring existing code. Present your proposed approach before making edits.
