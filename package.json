@@ -1,6 +1,6 @@
 {
   "name": "incremental-dashboard",
-  "version": "0.1.20260828",
+  "version": "0.1.20260909",
   "private": true,
   "scripts": {
     "dev": "next dev",
