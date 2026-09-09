@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Update package.json version
         env:
@@ -39,3 +41,20 @@ jobs:
           git add package.json
           git commit -m "chore: bump version to ${NEW_VERSION} [skip ci]"
           git push
+
+      - name: Sync bumped version back to dev
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin dev master
+          if ! git show-ref --verify --quiet refs/remotes/origin/dev; then
+            echo "No remote dev branch, skip sync."
+            exit 0
+          fi
+          git checkout -B sync-back origin/dev
+          if git merge --no-edit origin/master; then
+            git push origin HEAD:dev
+          else
+            echo "Conflict while merging master into dev; please resolve manually."
+            exit 1
+          fi
