@@ -1,6 +1,6 @@
 "use client"
 
-import { Bell } from "lucide-react"
+import { IconBell } from "@tabler/icons-react"
 import * as React from "react"
 import { UserButton } from "@clerk/nextjs"
 
@@ -26,7 +26,7 @@ export function SiteHeader() {
         <div className="ml-auto flex items-center gap-2">
           <ThemeToggle />
           <Button variant="outline" size="icon-sm">
-            <Bell />
+            <IconBell />
             <span className="sr-only">消息通知</span>
           </Button>
           <UserButton />
