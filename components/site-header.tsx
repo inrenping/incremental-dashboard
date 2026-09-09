@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
 import { SidebarTrigger } from "@/components/ui/sidebar"
 import { ThemeToggle } from "@/components/theme-toggle"
+import docMenu from "@/lib/doc-menu.json"
 
 const pageTitles: Record<string, string> = {
   "/home": "仪表盘",
@@ -19,9 +20,15 @@ const pageTitles: Record<string, string> = {
   "/settings/task": "定时任务",
 }
 
+const docTitleMap: Record<string, string> = Object.fromEntries(
+  (docMenu as { items: { text: string; href: string }[] }[]).flatMap(
+    (section) => section.items.map((item) => [item.href, item.text])
+  )
+)
+
 function getPageTitle(pathname: string): string {
   if (pageTitles[pathname]) return pageTitles[pathname]
-  if (pathname.startsWith("/doc/")) return "文档"
+  if (docTitleMap[pathname]) return docTitleMap[pathname]
   return "仪表盘"
 }
 
