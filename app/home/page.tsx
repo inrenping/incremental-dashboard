@@ -3,9 +3,7 @@
 import * as React from "react"
 
 import { clerkFetch } from "@/lib/api"
-import { AppSidebar } from "@/components/app-sidebar"
-import { SiteHeader } from "@/components/site-header"
-import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
+import { DashboardLayout } from "@/components/dashboard-layout"
 
 interface RunningTotalData {
   monthly_total?: number
@@ -179,37 +177,26 @@ export default function DashPage() {
   }, [])
 
   return (
-    <SidebarProvider
-      style={
-        {
-          "--sidebar-width": "calc(var(--spacing) * 72)",
-          "--header-height": "calc(var(--spacing) * 12)",
-        } as React.CSSProperties
-      }
-    >
-      <AppSidebar variant="inset" />
-      <SidebarInset>
-        <SiteHeader />
-        <div className="flex flex-1 flex-col p-6">
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-            {loading ? (
-              <>
-                <RunningStatSkeleton />
-                <RunningStatSkeleton />
-              </>
-            ) : error || !runningData ? (
-              <div className="rounded-xl border bg-card p-5 text-sm text-muted-foreground shadow-sm md:col-span-2">
-                统计信息加载失败，请确认后端服务已启动后刷新页面。
-              </div>
-            ) : (
-              <>
-                <RunningStatCard title="今年" period="year" data={runningData} />
-                <RunningStatCard title="本月" period="month" data={runningData} />
-              </>
-            )}
-          </div>
+    <DashboardLayout>
+      <div className="flex flex-1 flex-col p-6">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+          {loading ? (
+            <>
+              <RunningStatSkeleton />
+              <RunningStatSkeleton />
+            </>
+          ) : error || !runningData ? (
+            <div className="rounded-xl border bg-card p-5 text-sm text-muted-foreground shadow-sm md:col-span-2">
+              统计信息加载失败，请确认后端服务已启动后刷新页面。
+            </div>
+          ) : (
+            <>
+              <RunningStatCard title="今年" period="year" data={runningData} />
+              <RunningStatCard title="本月" period="month" data={runningData} />
+            </>
+          )}
         </div>
-      </SidebarInset>
-    </SidebarProvider>
+      </div>
+    </DashboardLayout>
   )
 }
