@@ -64,6 +64,16 @@ const navMain: NavItem[] = [
     title: "文档",
     url: "/doc/intro",
     icon: IconBook,
+    items: [
+      { title: "项目介绍", url: "/doc/intro" },
+      { title: "联系作者", url: "/doc/community" },
+      { title: "快速开始", url: "/doc/guide" },
+      { title: "常见问题", url: "/doc/faq" },
+      { title: "推荐", url: "/doc/recommended" },
+      { title: "开发指南", url: "/doc/development" },
+      { title: "使用条款", url: "/doc/tos" },
+      { title: "隐私政策", url: "/doc/privacy" },
+    ],
   },
 ]
 
