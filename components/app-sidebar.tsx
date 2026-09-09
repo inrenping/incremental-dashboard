@@ -29,15 +29,24 @@ const navMain: NavItem[] = [
     isActive: true,
   },
   {
-    title: "设置",
+    title: "个人资料",
     url: "/settings/profile",
     icon: IconUser,
-    items: [
-      { title: "个人资料", url: "/settings/profile", icon: IconUser },
-      { title: "账号管理", url: "/settings/accounts", icon: IconApps },
-      { title: "GPT 授权码", url: "/settings/gpt", icon: IconKey },
-      { title: "定时任务", url: "/settings/task", icon: IconClock },
-    ],
+  },
+  {
+    title: "账号管理",
+    url: "/settings/accounts",
+    icon: IconApps,
+  },
+  {
+    title: "GPT 授权码",
+    url: "/settings/gpt",
+    icon: IconKey,
+  },
+  {
+    title: "定时任务",
+    url: "/settings/task",
+    icon: IconClock,
   },
   {
     title: "文档",
