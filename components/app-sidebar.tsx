@@ -7,6 +7,8 @@ import {
   IconKey,
   IconClock,
   IconBook,
+  IconActivity,
+  IconCalendar,
 } from "@tabler/icons-react"
 import * as React from "react"
 
@@ -27,6 +29,16 @@ const navMain: NavItem[] = [
     url: "/home",
     icon: IconLayoutDashboard,
     isActive: true,
+  },
+  {
+    title: "活动记录",
+    url: "/activities",
+    icon: IconActivity,
+  },
+  {
+    title: "活动日历",
+    url: "/calendar",
+    icon: IconCalendar,
   },
   {
     title: "个人资料",

@@ -14,6 +14,8 @@ import docMenu from "@/lib/doc-menu.json"
 
 const pageTitles: Record<string, string> = {
   "/home": "仪表盘",
+  "/activities": "活动记录",
+  "/calendar": "活动日历",
   "/settings/profile": "个人资料",
   "/settings/accounts": "账号管理",
   "/settings/gpt": "GPT 授权码",
