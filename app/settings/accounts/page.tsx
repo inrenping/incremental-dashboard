@@ -101,8 +101,10 @@ export default function AccountsPage() {
       <section>
         <div className="grid grid-cols-1 gap-4">
           {loading && apps.length === 0 ? (
-            <div className="text-center py-12 text-muted-foreground">
-              加载中...
+            <div className="flex flex-col gap-4">
+              {Array.from({ length: 2 }).map((_, i) => (
+                <div key={i} className="h-24 animate-pulse rounded-xl bg-muted" />
+              ))}
             </div>
           ) : (
             apps.map((app) => (

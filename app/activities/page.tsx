@@ -360,9 +360,9 @@ const ActivityListPage = () => {
   };
 
   return (
-    <div className="p-6 mx-auto bg-slate-50/50 dark:bg-background min-h-screen text-sm transition-all duration-300 max-w-none w-full">
+    <div className="mx-auto w-full bg-background p-6 text-sm">
       {/* 平台选择器 & 过滤栏 */}
-      <div className="bg-card dark:bg-muted/20 p-2 rounded-lg border border-border shadow-sm mb-4 flex items-center gap-3 max-[768px]:flex-wrap max-[768px]:p-3">
+      <div className="bg-card p-2 rounded-lg border border-border shadow-sm mb-4 flex items-center gap-3 max-[768px]:flex-wrap max-[768px]:p-3">
         <Select
           value={appSelected || ""}
           onValueChange={handlePlatformChange}
@@ -549,11 +549,11 @@ const ActivityListPage = () => {
                     <td className="px-4 py-3 whitespace-nowrap">
                       <div className="flex items-center gap-2 text-foreground justify-center">
                         <div
-                          className='flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-black'
+                          className='flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-foreground'
                         >
                           <ActivitySportIcon
                             sportType={act.sport_type_raw}
-                            className="h-3.5 w-3.5 text-white"
+                            className="h-3.5 w-3.5 text-background"
                           />
                         </div>
                       </div>
@@ -565,7 +565,7 @@ const ActivityListPage = () => {
                         </div>
                       </DialogTrigger>
                     </td>
-                    <td className="px-4 py-5 text-muted-foreground whitespace-nowrap">
+                    <td className="px-4 py-3 text-muted-foreground whitespace-nowrap">
                       <div className="font-mono">{dayjs(act.start_time_local).format('YYYY-MM-DD HH:mm')}</div>
                     </td>
                     <td className="px-4 py-3 text-muted-foreground font-mono text-right whitespace-nowrap max-[768px]:hidden">
@@ -584,7 +584,7 @@ const ActivityListPage = () => {
                       {act.elevation_gain} m
                     </td>
                   </tr>
-                  <DialogContent className="sm:max-w-4xl max-h-3xl flex flex-col">
+                  <DialogContent className="sm:max-w-4xl max-h-[80vh] overflow-y-auto flex flex-col">
                     <DialogHeader>
                       <DialogTitle className="text-xl flex items-center gap-2">
                         {act.source_type} - {act.activity_name} - {dayjs(act.start_time_local).format('YYYY-MM-DD HH:mm')}
@@ -627,7 +627,7 @@ const ActivityListPage = () => {
                           </button>
                         </div>
                         {pushResult && (
-                          <div className={`mt-4 p-3 rounded-md text-sm font-mono whitespace-pre-wrap break-all ${pushResult.success ? 'bg-green-50 border border-green-200 text-green-800' : 'bg-red-50 border border-red-200 text-red-800'}`}>
+                          <div className={`mt-4 p-3 rounded-md text-sm font-mono whitespace-pre-wrap break-all ${pushResult.success ? 'bg-emerald-50 border border-emerald-200 text-emerald-800 dark:bg-emerald-950/30 dark:border-emerald-900 dark:text-emerald-400' : 'bg-red-50 border border-red-200 text-red-800 dark:bg-red-950/30 dark:border-red-900 dark:text-red-400'}`}>
                             {pushResult.success ? '上传成功' : '上传失败'}
                             <br />
                             {JSON.stringify(pushResult.result, null, 2)}

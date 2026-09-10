@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description: "运动数据管理仪表盘",
 };
 
-export default function RootLayout({ children }: LayoutProps<"/">) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
       lang="zh-CN"

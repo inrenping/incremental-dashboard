@@ -3,7 +3,6 @@
 import * as React from "react"
 
 import { clerkFetch } from "@/lib/api"
-import { DashboardLayout } from "@/components/dashboard-layout"
 
 interface RunningTotalData {
   monthly_total?: number
@@ -88,7 +87,7 @@ function RunningStatCard({
         <div className="flex items-center justify-between">
           <span className="text-sm text-muted-foreground">距离</span>
           <span className="text-lg font-semibold tabular-nums">
-            <span className="text-emerald-600">{formatValue(total)}</span> /{" "}
+            <span className="text-emerald-600 dark:text-emerald-400">{formatValue(total)}</span> /{" "}
             {formatValue(target)} 公里
           </span>
         </div>
@@ -101,7 +100,7 @@ function RunningStatCard({
         <div className="space-y-2">
           <div className="flex items-center justify-between text-sm">
             <span className="text-muted-foreground">目标完成</span>
-            <span className="text-emerald-600 tabular-nums">
+            <span className="text-emerald-600 dark:text-emerald-400 tabular-nums">
               {completionPercent.toFixed(2)}%
             </span>
           </div>
@@ -177,26 +176,24 @@ export default function DashPage() {
   }, [])
 
   return (
-    <DashboardLayout>
-      <div className="flex flex-1 flex-col p-6">
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-          {loading ? (
-            <>
-              <RunningStatSkeleton />
-              <RunningStatSkeleton />
-            </>
-          ) : error || !runningData ? (
-            <div className="rounded-xl border bg-card p-5 text-sm text-muted-foreground shadow-sm md:col-span-2">
-              统计信息加载失败，请确认后端服务已启动后刷新页面。
-            </div>
-          ) : (
-            <>
-              <RunningStatCard title="今年" period="year" data={runningData} />
-              <RunningStatCard title="本月" period="month" data={runningData} />
-            </>
-          )}
-        </div>
+    <div className="flex flex-1 flex-col p-6">
+      <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+        {loading ? (
+          <>
+            <RunningStatSkeleton />
+            <RunningStatSkeleton />
+          </>
+        ) : error || !runningData ? (
+          <div className="rounded-xl border bg-card p-5 text-sm text-muted-foreground shadow-sm md:col-span-2">
+            统计信息加载失败，请确认后端服务已启动后刷新页面。
+          </div>
+        ) : (
+          <>
+            <RunningStatCard title="今年" period="year" data={runningData} />
+            <RunningStatCard title="本月" period="month" data={runningData} />
+          </>
+        )}
       </div>
-    </DashboardLayout>
+    </div>
   )
 }

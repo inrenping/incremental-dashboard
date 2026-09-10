@@ -7,6 +7,15 @@ import {
   IconChevronsLeft,
   IconChevronsRight,
 } from '@tabler/icons-react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 
 interface PaginationProps {
   total: number;
@@ -35,22 +44,23 @@ export const Pagination = ({
   };
 
   return (
-    <div className="px-6 py-4 bg-card border-t border-border flex justify-between items-center text-muted-foreground">
+    <div className="flex flex-wrap items-center justify-between gap-3 border-t border-border bg-card px-6 py-4 text-muted-foreground">
       {/* 左侧：统计与配置 */}
-      <div className="flex items-center gap-8">
+      <div className="flex items-center gap-4 md:gap-8">
         <div className="flex items-center gap-1">
           共 {total} 条记录
         </div>
-        <select
-          value={limit}
-          onChange={(e) => onLimitChange(e.target.value)}
-          className="flex items-center gap-1 px-2 py-1 border border-border rounded bg-background outline-none focus:ring-1 focus:ring-ring cursor-pointer text-sm"
-        >
-          <option value="10">每页 10 条</option>
-          <option value="20">每页 20 条</option>
-          <option value="50">每页 50 条</option>
-          <option value="100">每页 100 条</option>
-        </select>
+        <Select value={limit.toString()} onValueChange={onLimitChange}>
+          <SelectTrigger size="sm" className="w-[120px]">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="10">每页 10 条</SelectItem>
+            <SelectItem value="20">每页 20 条</SelectItem>
+            <SelectItem value="50">每页 50 条</SelectItem>
+            <SelectItem value="100">每页 100 条</SelectItem>
+          </SelectContent>
+        </Select>
         <div>
           第 {page} / {totalPages} 页
         </div>
@@ -58,51 +68,32 @@ export const Pagination = ({
 
       {/* 右侧：导航与跳转 */}
       <div className="flex items-center gap-2">
-        <button
-          onClick={() => onPageChange(1)}
-          disabled={page === 1}
-          className="w-9 h-9 border border-border rounded hover:bg-muted flex items-center justify-center transition-colors disabled:opacity-50"
-        >
+        <Button variant="outline" size="icon-sm" onClick={() => onPageChange(1)} disabled={page === 1}>
           <IconChevronsLeft size={18} />
-        </button>
-        <button
-          onClick={() => onPageChange(Math.max(1, page - 1))}
-          disabled={page === 1}
-          className="w-9 h-9 border border-border rounded hover:bg-muted flex items-center justify-center transition-colors disabled:opacity-50"
-        >
+        </Button>
+        <Button variant="outline" size="icon-sm" onClick={() => onPageChange(Math.max(1, page - 1))} disabled={page === 1}>
           <IconChevronLeft size={18} />
-        </button>
-        <button
-          onClick={() => onPageChange(page + 1)}
-          disabled={page >= totalPages}
-          className="w-9 h-9 border border-border rounded hover:bg-muted flex items-center justify-center transition-colors disabled:opacity-50"
-        >
+        </Button>
+        <Button variant="outline" size="icon-sm" onClick={() => onPageChange(page + 1)} disabled={page >= totalPages}>
           <IconChevronRight size={18} />
-        </button>
-        <button
-          onClick={() => onPageChange(totalPages)}
-          disabled={page >= totalPages}
-          className="w-9 h-9 border border-border rounded hover:bg-muted flex items-center justify-center transition-colors disabled:opacity-50"
-        >
+        </Button>
+        <Button variant="outline" size="icon-sm" onClick={() => onPageChange(totalPages)} disabled={page >= totalPages}>
           <IconChevronsRight size={18} />
-        </button>
-        <div className="flex items-center h-9 border border-border rounded px-3 bg-muted/30 ml-1">
-          <span>跳至</span>
-          <input
+        </Button>
+        <div className="ml-1 flex items-center gap-1">
+          <span className="text-sm">跳至</span>
+          <Input
             type="text"
-            className="w-10 mx-1 text-center border-b border-border bg-transparent outline-none focus:border-primary transition-colors font-medium text-foreground"
+            className="h-7 w-14 text-center"
             value={jumpPageInput}
             onChange={(e) => setJumpPageInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleJump()}
           />
-          <span>页</span>
+          <span className="text-sm">页</span>
         </div>
-        <button
-          onClick={handleJump}
-          className="px-5 h-9 bg-primary text-primary-foreground rounded hover:bg-primary/90 transition-colors font-medium"
-        >
+        <Button onClick={handleJump} className="px-5">
           GO
-        </button>
+        </Button>
       </div>
     </div>
   );

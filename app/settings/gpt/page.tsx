@@ -90,7 +90,7 @@ export default function GptCodePage() {
       </div>
 
       {/* 授权码展示卡片 */}
-      <div className="rounded-xl bg-background p-6">
+      <div className="rounded-xl border bg-card p-6">
         <div className="flex items-center justify-between mb-4">
           <span className="text-sm text-muted-foreground">当前授权码</span>
           {code && (
@@ -156,7 +156,7 @@ export default function GptCodePage() {
       </div>
 
       {/* 使用说明 */}
-      <div className="rounded-xl bg-background p-6">
+      <div className="rounded-xl border bg-card p-6">
         <h2 className="mb-4 text-sm font-semibold">如何使用</h2>
         <ol className="space-y-3 text-sm text-foreground">
           <li className="flex gap-3">
