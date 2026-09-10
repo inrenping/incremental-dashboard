@@ -314,7 +314,7 @@ export default function CalendarPage() {
                         className="flex min-h-32 flex-col items-center border-l px-1 pt-2 first:border-l-0"
                       >
                         {isToday && (
-                          <span className="mb-1 text-[10px] font-medium text-orange-500">今天</span>
+                          <span className="mb-1 text-[10px] font-medium text-orange-500 dark:text-orange-400">今天</span>
                         )}
 
                         <div className="flex flex-col items-center gap-2">
@@ -362,7 +362,7 @@ export default function CalendarPage() {
                                       <p className="text-xs text-muted-foreground">
                                         {dayjs(act.start_time_local).format('YYYY/MM/DD HH:mm')}
                                       </p>
-                                      <p className="mt-0.5 text-sm font-semibold text-emerald-600">
+                                      <p className="mt-0.5 text-sm font-semibold text-emerald-600 dark:text-emerald-400">
                                         {act.location ? `${act.location} ` : ''}{act.activity_name}
                                       </p>
                                       <div className="mt-2 space-y-1 text-xs">

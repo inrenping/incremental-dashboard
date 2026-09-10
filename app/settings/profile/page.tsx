@@ -187,7 +187,7 @@ export default function ProfilePage() {
       <div className="space-y-1">
         <h1 className="text-xl font-semibold">我的个人资料</h1>
       </div>
-      <div className="rounded-xl bg-background p-6">
+      <div className="rounded-xl border bg-card p-6">
         <div className="grid gap-y-4 text-sm text-foreground">
           <div className="grid items-center gap-4 border-b border-border pb-4">
             <span className="text-sm text-muted-foreground">用户名</span>
