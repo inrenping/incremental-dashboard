@@ -1,6 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { storage } from "@/lib/storage"
@@ -47,6 +48,7 @@ function formatDate(dateStr?: string) {
 }
 
 export default function ProfilePage() {
+  const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
   const [socials, setSocials] = useState<SocialAccount[]>([])
   const [loadingSocials, setLoadingSocials] = useState(true)
@@ -67,7 +69,7 @@ export default function ProfilePage() {
           setUser(parsedUser as User)
           setYearlyTarget(
             parsedUser.yearly_target?.toString() ??
-              String(new Date().getFullYear())
+            String(new Date().getFullYear())
           )
         } catch (error) {
           console.error("解析用户信息失败:", error)
@@ -92,7 +94,7 @@ export default function ProfilePage() {
             setUser(userInfo)
             setYearlyTarget(
               data.user.yearly_target?.toString() ??
-                String(new Date().getFullYear())
+              String(new Date().getFullYear())
             )
           }
         }
@@ -136,7 +138,7 @@ export default function ProfilePage() {
       if (res.ok) {
         storage.remove("user")
         storage.remove("token")
-        window.location.href = "/"
+        router.push("/")
       } else {
         console.error("删除账号失败:", res.status)
       }

@@ -47,15 +47,23 @@ export function TaskDialog({
 
   useEffect(() => {
     if (open && task) {
-      setSourceId(task.connect_source_id.toString())
-      setTargetId(task.connect_target_id.toString())
-      setHour(task.hour.toString())
-      setIsActive(task.is_active)
+      const nextSourceId = task.connect_source_id.toString()
+      const nextTargetId = task.connect_target_id.toString()
+      const nextHour = task.hour.toString()
+      const nextIsActive = task.is_active
+      queueMicrotask(() => {
+        setSourceId(nextSourceId)
+        setTargetId(nextTargetId)
+        setHour(nextHour)
+        setIsActive(nextIsActive)
+      })
     } else if (open && !task) {
-      setSourceId("")
-      setTargetId("")
-      setHour("1")
-      setIsActive(true)
+      queueMicrotask(() => {
+        setSourceId("")
+        setTargetId("")
+        setHour("1")
+        setIsActive(true)
+      })
     }
   }, [open, task])
 

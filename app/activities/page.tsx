@@ -88,12 +88,19 @@ const ActivityListPage = () => {
   const [apps, setApps] = useState<AppConfig[]>([]);
   const [pushResult, setPushResult] = useState<{ success: boolean; result: unknown } | null>(null);
 
-  // 当 URL 参数变化时（如点击浏览器后退），同步本地状态
+  // Sync local filter state when URL params change (e.g. browser back).
   useEffect(() => {
-    setStartDate(searchParams.get('startDate') || "");
-    setEndDate(searchParams.get('endDate') || "");
-    setSportType(searchParams.get('sport_types') || "");
-    setSearchName(searchParams.get('name') || "");
+    const startDateParam = searchParams.get('startDate') || "";
+    const endDateParam = searchParams.get('endDate') || "";
+    const sportTypeParam = searchParams.get('sport_types') || "";
+    const nameParam = searchParams.get('name') || "";
+
+    queueMicrotask(() => {
+      setStartDate(startDateParam);
+      setEndDate(endDateParam);
+      setSportType(sportTypeParam);
+      setSearchName(nameParam);
+    });
   }, [searchParams]);
 
   // 处理平台切换逻辑：统一使用 connect_id 并重置页码和列表
@@ -106,40 +113,45 @@ const ActivityListPage = () => {
     router.push(`${pathname}?${params.toString()}`);
   }, [searchParams, pathname, router]);
 
-  const fetchAppsStatus = useCallback(async (showLoading = false) => {
-    if (showLoading) setLoading(true);
-    try {
-      const response = await authFetch('/api/v1/base/getConnectConfigs');
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to fetch status');
-      }
-      const data: AppConfig[] = await response.json();
-      setApps(data);
+  useEffect(() => {
+    let cancelled = false;
 
-      // Auto-select the first active platform if none is selected
-      if (!appSelected && data.length > 0) {
-        const firstActive = data.find(a => a.is_active) || data[0];
-        handlePlatformChange(firstActive.id.toString());
-      }
-    } catch (err) {
-      console.error("Fetch status error:", err);
-      toast.error("获取连接配置失败");
-    } finally {
-      if (showLoading) setLoading(false);
-    }
+    authFetch('/api/v1/base/getConnectConfigs')
+      .then(async (response) => {
+        if (!response.ok) {
+          const errorData = await response.json();
+          throw new Error(errorData.error || 'Failed to fetch status');
+        }
+        const data: AppConfig[] = await response.json();
+        if (cancelled) return;
+
+        setApps(data);
+
+        // Auto-select the first active platform if none is selected
+        if (!appSelected && data.length > 0) {
+          const firstActive = data.find(a => a.is_active) || data[0];
+          handlePlatformChange(firstActive.id.toString());
+        }
+      })
+      .catch((err) => {
+        if (cancelled) return;
+        console.error("Fetch status error:", err);
+        toast.error("获取连接配置失败");
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [appSelected, handlePlatformChange]);
 
-  useEffect(() => {
-    fetchAppsStatus();
-  }, [fetchAppsStatus]);
-
-  // 对接后端分页接口
+  // Fetch paginated activities; loading state is managed by callers/effects.
   const fetchActivities = useCallback(async () => {
     if (!appSelected) return;
 
-    setLoading(true);
-    // 获取 URL 中的最新参数进行查询，确保只有"已提交"的条件生效
+    // Use the URL's current params so only committed filters are applied.
     const currentParams = new URLSearchParams(window.location.search);
     const urlStartDate = currentParams.get('startDate');
     const urlEndDate = currentParams.get('endDate');
@@ -171,14 +183,55 @@ const ActivityListPage = () => {
       }
     } catch (error) {
       console.error("Failed to fetch activities:", error);
-    } finally {
-      setLoading(false);
     }
-  }, [appSelected, page, limit, searchParams]);
+  }, [appSelected, page, limit]);
 
   useEffect(() => {
-    fetchActivities();
-  }, [fetchActivities]);
+    if (!appSelected) return;
+
+    let cancelled = false;
+
+    queueMicrotask(() => {
+      if (!cancelled) setLoading(true);
+    });
+
+    // Build the same query string used by fetchActivities.
+    const currentParams = new URLSearchParams(window.location.search);
+    const urlStartDate = currentParams.get('startDate');
+    const urlEndDate = currentParams.get('endDate');
+    const urlSportType = currentParams.get('sport_types');
+    const urlName = currentParams.get('name');
+
+    const queryParams = new URLSearchParams({
+      connect_id: appSelected,
+      page_size: limit.toString(),
+      page_count: page.toString(),
+    });
+    if (urlStartDate) queryParams.set('start_date', urlStartDate);
+    if (urlEndDate) queryParams.set('end_date', urlEndDate);
+    if (urlSportType) queryParams.set('sport_types', urlSportType);
+    if (urlName) queryParams.set('name', urlName);
+
+    authFetch(`/api/v1/base/getActivitiesByPage?${queryParams.toString()}`)
+      .then(async (response) => {
+        const result = await response.json();
+        if (cancelled) return;
+        if (result.status === "success") {
+          setActivities(result.data);
+          setTotal(result.total || 0);
+        }
+      })
+      .catch((error) => {
+        if (!cancelled) console.error("Failed to fetch activities:", error);
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [appSelected, page, limit]);
 
   const handlePageChange = (newPage: number) => {
     setPage(newPage);
@@ -226,6 +279,7 @@ const ActivityListPage = () => {
 
       const result = await response.json();
       if (result.status === "success") {
+        setLoading(true);
         await fetchActivities();
       }
     } catch (error) {
@@ -251,6 +305,7 @@ const ActivityListPage = () => {
 
       const result = await response.json();
       if (result.status === "success") {
+        setLoading(true);
         await fetchActivities();
       }
     } catch (error) {

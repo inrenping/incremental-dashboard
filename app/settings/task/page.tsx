@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import { cn } from "@/lib/utils"
 import { clerkFetch } from "@/lib/api"
 import { toast } from "sonner"
@@ -24,12 +24,7 @@ export default function TasksPage() {
   const [dialogOpen, setDialogOpen] = useState(false)
   const [currentTask, setCurrentTask] = useState<TaskItem | null>(null)
 
-  useEffect(() => {
-    fetchTasks()
-    fetchApps()
-  }, [])
-
-  const fetchTasks = async () => {
+  const fetchTasks = useCallback(async () => {
     setLoading(true)
     try {
       const response = await clerkFetch("/api/v1/task")
@@ -44,9 +39,9 @@ export default function TasksPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
 
-  const fetchApps = async () => {
+  const fetchApps = useCallback(async () => {
     try {
       const response = await clerkFetch("/api/v1/base/getConnectConfigs")
       if (response.ok) {
@@ -56,7 +51,14 @@ export default function TasksPage() {
     } catch (err) {
       console.error("Fetch apps error:", err)
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    queueMicrotask(() => {
+      fetchTasks()
+      fetchApps()
+    })
+  }, [fetchTasks, fetchApps])
 
   const getAppDisplay = (id: number) => {
     const app = apps.find((a) => a.id === id)
@@ -101,7 +103,7 @@ export default function TasksPage() {
           </div>
         ) : tasks.length === 0 ? (
           <div className="text-center py-12 text-muted-foreground">
-            暂无任务，请点击"新建任务"创建
+            暂无任务，请点击&quot;新建任务&quot;创建
           </div>
         ) : (
           <div className="grid grid-cols-1 gap-4">

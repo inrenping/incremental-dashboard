@@ -1,3 +1,4 @@
+import { createElement } from 'react';
 import {
   IconRun,
   IconBike,
@@ -142,8 +143,9 @@ interface ActivitySportIconProps {
 }
 
 export function ActivitySportIcon({ sportType, className }: ActivitySportIconProps) {
-  const Icon = getActivityIconComponent(sportType);
-  return <Icon className={className} />;
+  const iconName = getActivityIconName(sportType);
+  const Icon = ACTIVITY_ICON_MAP[iconName];
+  return createElement(Icon, { className });
 }
 
 interface ActivityTypeIconProps {
@@ -152,6 +154,7 @@ interface ActivityTypeIconProps {
 }
 
 export function ActivityTypeIcon({ name, className }: ActivityTypeIconProps) {
-  const Icon = ACTIVITY_ICON_MAP[getActivityIconByName(name)];
-  return <Icon className={className} />;
+  const iconName = getActivityIconByName(name);
+  const Icon = ACTIVITY_ICON_MAP[iconName];
+  return createElement(Icon, { className });
 }

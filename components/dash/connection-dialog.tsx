@@ -95,11 +95,12 @@ export function AppConnectionDialog({
 
   useEffect(() => {
     if (open && app) {
-      setSelectedPlatform(app.source_type)
-      if (app.region === "cn") {
-        setSelectedPlatform("garmin_cn")
-      }
-      setMaster(app.master || false)
+      const platform = app.region === "cn" ? "garmin_cn" : app.source_type
+      const nextMaster = app.master || false
+      queueMicrotask(() => {
+        setSelectedPlatform(platform)
+        setMaster(nextMaster)
+      })
     }
   }, [open, app])
 

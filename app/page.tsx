@@ -1,6 +1,7 @@
 "use client"
 
 import { useRouter } from "next/navigation"
+import Image from "next/image"
 import {
   IconBrandGithubFilled,
   IconChartBar,
@@ -27,7 +28,7 @@ export default function Home() {
         <section className="py-24 px-4 text-left bg-cover bg-center bg-no-repeat">
           <div className="max-w-6xl mx-auto space-y-6">
             <h1 className="flex items-center justify-start gap-4 text-6xl font-black tracking-tighter text-foreground">
-              <img src="/favicon.svg" alt="Logo" className="h-16 w-16" />
+              <Image src="/favicon.svg" alt="Logo" width={64} height={64} className="h-16 w-16" />
               incremental.icu
             </h1>
             <p className="text-5xl text-foreground font-black tracking-tighter">
