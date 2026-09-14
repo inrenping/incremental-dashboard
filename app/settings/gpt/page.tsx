@@ -42,8 +42,32 @@ export default function GptCodePage() {
   }, [])
 
   useEffect(() => {
-    loadCode(false)
-  }, [loadCode])
+    let cancelled = false
+
+    clerkFetch("/api/v1/user/oauth-code", { method: "GET" })
+      .then(async (res) => {
+        if (!res.ok) {
+          const data = await res.json().catch(() => ({}))
+          if (!cancelled) toast.error(data.detail || "加载授权码失败")
+          return
+        }
+        const data: OauthCodeResponse = await res.json()
+        if (cancelled) return
+        setCode(data.code)
+        setExpiresAt(new Date(data.expires_at).getTime())
+        setRemaining(Math.max(0, data.expires_in))
+      })
+      .catch(() => {
+        if (!cancelled) toast.error("加载授权码失败")
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false)
+      })
+
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   useEffect(() => {
     if (!expiresAt) return

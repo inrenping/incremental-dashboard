@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { clerkFetch } from "@/lib/api"
 import { AppConnectionDialog } from "@/components/dash/connection-dialog"
 import { AppCard } from "@/components/dash/app-card"
@@ -15,11 +15,7 @@ export default function AccountsPage() {
   const [currentApp, setCurrentApp] = useState<AppConfig | null>(null)
   const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    fetchAppsStatus()
-  }, [])
-
-  const fetchAppsStatus = async () => {
+  const fetchAppsStatus = useCallback(async () => {
     setLoading(true)
     try {
       const response = await clerkFetch("/api/v1/base/getConnectConfigs")
@@ -35,7 +31,11 @@ export default function AccountsPage() {
     } finally {
       setLoading(false)
     }
-  }
+  }, [])
+
+  useEffect(() => {
+    queueMicrotask(() => fetchAppsStatus())
+  }, [fetchAppsStatus])
 
   const handleRefreshAuth = async (id: number) => {
     setLoading(true)
